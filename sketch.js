@@ -77,6 +77,7 @@ function draw() {
 			strokeWeight(10)
 		} else {
 			strokeWeight(5)
+			angle += 90
 		}
 
 		reset()
