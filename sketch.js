@@ -22,7 +22,7 @@ function setup() {
 	strokeWeight(3)
 	stroke(0)
 	
-	let branch = new Branch(0, h / 2, h / 8, 0)
+	let branch = new Branch(0, h / 3, h / 8, 0)
 	branches.push(branch)
 }
 
