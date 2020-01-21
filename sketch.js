@@ -6,29 +6,39 @@ let delta_len = -5
 let angle = 30
 let n_branch = 2
 
+let fill_color = [100, 200, 100]
+let stroke_color = 0
+let next_fill = 200
+let next_stroke = 200
+
+let scle = 1
+
 let grow_rate = 2
 let branches = []
 
 let bg
 
-function setup() {
-	createCanvas(w, h)
-	background(200)
-	
-	angleMode(DEGREES)
-	imageMode(CENTER)
 
-	translate(w / 2, h / 2)
-	strokeWeight(3)
-	stroke(0)
-	
+function reset() {
 	let branch = new Branch(0, h / 3, h / 8, 0)
 	branches.push(branch)
 }
 
 
+function setup() {
+	createCanvas(w, h)
+	background(200)
+	angleMode(DEGREES)
+	imageMode(CENTER)
+	strokeWeight(5)
+	reset()
+}
+
+
 function draw() {
 	translate(w / 2, h / 2)
+	scale(scle)
+	scle *= -1
 
 	for (let i = 0; i < branches.length; i++) {
 		let branch = branches[i]
@@ -52,6 +62,25 @@ function draw() {
 			}
 		}
 	}
+
+	if (branches.length == 0) {
+		console.log([fill_color, next_fill])
+		let next = next_fill
+		next_fill = fill_color
+		fill_color = next
+
+		next = next_stroke
+		next_stroke = stroke_color
+		stroke_color = next
+
+		if (stroke_color == 200) {
+			strokeWeight(10)
+		} else {
+			strokeWeight(5)
+		}
+
+		reset()
+	} 
 }
 
 
@@ -103,11 +132,8 @@ class Branch {
 			this.grown = true
 		}
 
-		line(this.x1, this.y1, x2, y2)
-		push()
-		fill(100, 200, 100)
-		strokeWeight(0)
-		ellipse(x2, y2, 4, 4)
-		pop()
+		fill(fill_color)
+		stroke(stroke_color)
+		ellipse(x2, y2, 10, 10)
 	}
 }
